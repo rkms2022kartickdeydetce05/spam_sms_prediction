@@ -86,6 +86,19 @@ def add_bg_from_local(image_file):
     )
 
 # -----------------------------
+# Custom CSS for Menu styling
+# -----------------------------
+st.markdown("""
+    <style>
+    .streamlit-expanderHeader {
+        font-size: 22px !important;
+        font-weight: bold !important;
+        color: #B71C1C !important;   /* গাঢ় লাল */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# -----------------------------
 # Utility: text clean
 # -----------------------------
 def clean_text(text):
@@ -122,19 +135,15 @@ languages = {
 }
 
 # -----------------------------
-# Top Navigation
+# Top Navigation (Hamburger menu)
 # -----------------------------
-col1, col2, col3, col4 = st.columns(4)
-with col1:
+with st.expander("☰ Menu"):
     if st.button("Home"):
         st.session_state["page"] = "home"
-with col2:
     if st.button("About"):
         st.session_state["page"] = "about"
-with col3:
     if st.button("Login"):
         st.session_state["page"] = "login"
-with col4:
     if st.button("Sign Up"):
         st.session_state["page"] = "signup"
 
@@ -207,7 +216,7 @@ if st.session_state["page"] == "home":
 elif st.session_state["page"] == "about":
     st.title("ℹ About SpamSens AI")
     st.write("""
-    *SpamSens AI* is a demo application built with Streamlit.  
+    SpamSens AI is a demo application built with Streamlit.  
     Features include:
     - Email spam classification (detect spam vs. ham)  
     - Simple text translation  
