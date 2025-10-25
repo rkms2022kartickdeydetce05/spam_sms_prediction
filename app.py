@@ -4,9 +4,7 @@ import re
 from deep_translator import GoogleTranslator
 import base64
 
-# -----------------------------
-# Session State Initialization
-# -----------------------------
+
 if "page" not in st.session_state:
     st.session_state["page"] = "home"
 
@@ -17,9 +15,7 @@ if "logged_in" not in st.session_state:
 if "user_email" not in st.session_state:
     st.session_state["user_email"] = None
 
-# -----------------------------
-# Background Setup
-# -----------------------------
+
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as file:
         encoded_string = base64.b64encode(file.read()).decode()
@@ -85,22 +81,18 @@ def add_bg_from_local(image_file):
         unsafe_allow_html=True
     )
 
-# -----------------------------
-# Custom CSS for Menu styling
-# -----------------------------
+
 st.markdown("""
     <style>
     .streamlit-expanderHeader {
         font-size: 22px !important;
         font-weight: bold !important;
-        color: #B71C1C !important;   /* গাঢ় লাল */
+        color: #B71C1C !important;   
     }
     </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------
-# Utility: text clean
-# -----------------------------
+
 def clean_text(text):
     text = text.lower()
     text = re.sub(r"http\S+|www\S+|https\S+", "", text)
@@ -119,9 +111,7 @@ def load_model():
 
 model, vectorizer = load_model()
 
-# -----------------------------
-# Languages for Translation
-# -----------------------------
+
 languages = {
     "Hindi": "hi",
     "Bengali": "bn",
@@ -134,9 +124,7 @@ languages = {
     "Urdu": "ur"
 }
 
-# -----------------------------
-# Top Navigation (Hamburger menu)
-# -----------------------------
+
 with st.expander("☰ Menu"):
     if st.button("Home"):
         st.session_state["page"] = "home"
@@ -147,9 +135,7 @@ with st.expander("☰ Menu"):
     if st.button("Sign Up"):
         st.session_state["page"] = "signup"
 
-# -----------------------------
-# HOME PAGE
-# -----------------------------
+
 if st.session_state["page"] == "home":
     st.set_page_config(page_title="Spam Classifier + Translator", layout="centered")
     add_bg_from_local("background.jpg")
@@ -169,10 +155,10 @@ if st.session_state["page"] == "home":
     else:
         st.info("ℹ Please login or sign up to access all features.")
 
-    # Input box
+    
     user_input = st.text_area("✍ Enter your message:", height=150)
 
-    # Predict button
+    
     if st.button("Predict"):
         if not user_input.strip():
             st.warning("Please enter a message first!")
@@ -184,7 +170,7 @@ if st.session_state["page"] == "home":
 
             st.markdown(f"<div class='result-box'>{label}</div>", unsafe_allow_html=True)
 
-    # Translator
+    
     target_lang = st.selectbox("Choose language:", list(languages.keys()))
     if st.button("Translate"):
         if not user_input.strip():
@@ -201,7 +187,7 @@ if st.session_state["page"] == "home":
                 unsafe_allow_html=True
             )
 
-    # Credits
+    
     st.markdown("---")
     st.write("### 📌 Credits")
     st.write("""
@@ -210,9 +196,7 @@ if st.session_state["page"] == "home":
     - Model: TF-IDF + Naive Bayes
     """)
 
-# -----------------------------
-# ABOUT PAGE
-# -----------------------------
+
 elif st.session_state["page"] == "about":
     st.title("ℹ About SpamSens AI")
     st.write("""
@@ -254,9 +238,7 @@ elif st.session_state["page"] == "login":
     if st.button("⬅ Back"):
         st.session_state["page"] = "home"
 
-# -----------------------------
-# SIGN UP PAGE
-# -----------------------------
+
 elif st.session_state["page"] == "signup":
     st.title("📝 Sign Up")
 
